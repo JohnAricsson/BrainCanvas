@@ -1,20 +1,18 @@
 import React from "react";
-import { Route, Routes } from "react-router";
-import HomePage from "./pages/Homepage";
-import CreatePage from "./pages/CreatePage";
-import NoteDetailPage from "./pages/NoteDetailPage";
-import toast from "react-hot-toast";
-//DaisyUI for tailwind css library npm i -D daisyui@latest
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+
 const App = () => {
   return (
-    <div>
-      <button className="btn btn-primary">Works</button>
+    <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/create" element={<CreatePage />} />
-        <Route path="/note/:id" element={<NoteDetailPage />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
-    </div>
+    </Router>
   );
 };
 
