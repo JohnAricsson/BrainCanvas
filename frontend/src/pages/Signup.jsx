@@ -194,7 +194,7 @@ const Signup = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 rounded-xl bg-gradient-to-r from-green-800 via-green-700 to-green-600 text-white font-semibold hover:shadow-lg transition-all flex items-center justify-center disabled:opacity-70"
+              className="w-full py-4 rounded-xl bg-linear-to-r from-green-800 via-green-700 to-green-600 text-white font-semibold hover:shadow-lg transition-all flex items-center justify-center disabled:opacity-70"
             >
               {isLoading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
