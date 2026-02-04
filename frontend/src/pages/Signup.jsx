@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   Mail,
   Lock,
@@ -11,8 +10,10 @@ import {
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import backgroundImg from "../assets/LoginBackground.jpg";
-
+import { useNavigate, Link } from "react-router-dom";
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,28 +23,56 @@ const Signup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
+    // Frontend validation (keep this)
     if (!name || !email || !password || !confirmPassword) {
       setError("Please fill in all fields");
       return;
     }
+
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError("Please enter a valid email address");
       return;
     }
+
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
-    setError("");
-    setIsLoading(true);
+    try {
+      setError(null);
+      setIsLoading(true);
 
-    setTimeout(() => {
+      const response = await fetch("http://localhost:5001/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Signup failed");
+      }
+
+      // ✅ Success
+      console.log("User created:", data);
       setIsLoading(false);
-      console.log("Signup:", name, email, password);
-    }, 1500);
+
+      // Redirect to login
+      navigate("/login");
+    } catch (err) {
+      setIsLoading(false);
+      setError(err.message);
+    }
   };
 
   return (
@@ -187,7 +216,14 @@ const Signup = () => {
 
             {/* Social Login */}
             <div className="grid grid-cols-2 gap-3 mb-8">
-              <button className="flex items-center justify-center py-3 bg-blue-600 border border-blue-700 rounded-xl hover:bg-blue-700 text-white">
+              <button
+                type="button"
+                onClick={() =>
+                  (window.location.href =
+                    "http://localhost:5001/api/auth/facebook")
+                }
+                className="flex items-center justify-center py-3 bg-blue-600 border border-blue-700 rounded-xl hover:bg-blue-700 text-white"
+              >
                 <svg
                   className="w-5 h-5 mr-2"
                   fill="currentColor"
@@ -198,7 +234,14 @@ const Signup = () => {
                 Facebook
               </button>
 
-              <button className="flex items-center justify-center py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-300 text-gray-800">
+              <button
+                type="button"
+                onClick={() =>
+                  (window.location.href =
+                    "http://localhost:5001/api/auth/google")
+                }
+                className="flex items-center justify-center py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-300 text-gray-800"
+              >
                 <svg className="w-5 h-5 mr-2" viewBox="0 0 533.5 544.3">
                   <path
                     d="M533.5 278.4c0-17.9-1.6-35.2-4.6-52H272v98.9h146.9c-6.4 34.7-25.7 64.1-54.9 83.9v69.7h88.7c51.9-47.9 81.8-118.3 81.8-200.5z"
