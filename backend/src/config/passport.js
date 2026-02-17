@@ -1,5 +1,6 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as FacebookStrategy } from "passport-facebook";
 import User from "../models/User.js";
 
 passport.use(
@@ -28,8 +29,40 @@ passport.use(
     },
   ),
 );
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.FACEBOOK_APP_ID,
+      clientSecret: process.env.FACEBOOK_APP_SECRET,
+      callbackURL: "/api/auth/facebook/callback",
+      profileFields: ["id", "displayName", "emails", "photos"],
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const email = profile.emails?.[0]?.value;
+        let user = await User.findOne({ facebookId: profile.id });
+        if (!user && email) {
+          user = await User.findOne({ email: email });
+          if (user) {
+            user.facebookId = profile.id;
+            await user.save();
+          }
+        }
+        if (!user) {
+          user = await User.create({
+            name: profile.displayName,
+            email: email,
+            facebookId: profile.id,
+          });
+        }
 
-// Required for session
+        done(null, user);
+      } catch (err) {
+        done(err, null);
+      }
+    },
+  ),
+);
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });

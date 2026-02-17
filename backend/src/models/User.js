@@ -6,8 +6,6 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: function () {
-      // ONLY require password if there is no googleId or facebookId
-      // (This is a "Conditional Required" field)
       return !this.googleId && !this.facebookId;
     },
   },

@@ -179,22 +179,11 @@ const Signup = () => {
               </div>
             )}
 
-            {/* Remember Me */}
-            <div className="flex items-center justify-between mb-4">
-              <label className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 text-blue-500 rounded border-gray-300 focus:ring-blue-400"
-                />
-                <span className="text-sm text-gray-700">Remember me</span>
-              </label>
-            </div>
-
             {/* Signup Button */}
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 rounded-xl bg-linear-to-r from-green-800 via-green-700 to-green-600 text-white font-semibold hover:shadow-lg transition-all flex items-center justify-center disabled:opacity-70"
+              className="w-full py-4 rounded-xl bg-linear-to-r from-green-800 via-green-700 to-green-600 text-white cursor-pointer font-semibold hover:shadow-lg transition-all flex items-center justify-center disabled:opacity-70"
             >
               {isLoading ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
@@ -222,7 +211,7 @@ const Signup = () => {
                   (window.location.href =
                     "http://localhost:5001/api/auth/facebook")
                 }
-                className="flex items-center justify-center py-3 bg-blue-600 border border-blue-700 rounded-xl hover:bg-blue-700 text-white"
+                className="flex items-center justify-center py-3 bg-blue-600 border border-blue-700 rounded-xl hover:bg-blue-700 text-white cursor-pointer"
               >
                 <svg
                   className="w-5 h-5 mr-2"
@@ -240,7 +229,7 @@ const Signup = () => {
                   (window.location.href =
                     "http://localhost:5001/api/auth/google")
                 }
-                className="flex items-center justify-center py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-300 text-gray-800"
+                className="flex items-center justify-center py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-300 text-gray-800 cursor-pointer"
               >
                 <svg className="w-5 h-5 mr-2" viewBox="0 0 533.5 544.3">
                   <path

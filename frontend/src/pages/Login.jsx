@@ -11,28 +11,64 @@ import {
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import backgroundImg from "../assets/LoginBackground.jpg";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (!email || !password) return setError("Please fill in all fields");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      return setError("Please enter a valid email address");
+    setError(null);
 
-    setError("");
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log("Login with:", email, password);
-    }, 1500);
-  };
 
+    try {
+      const res = await fetch("http://localhost:5001/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem("token", data.token);
+        navigate("/");
+      } else {
+        setError(data.message || "Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      setError(
+        "Server connection failed. Is your backend running on port 5001?",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get("token");
+
+    if (token) {
+      localStorage.setItem("token", token);
+      navigate("/");
+    }
+  }, [location, navigate]);
   return (
     <>
       <Navbar />
@@ -111,22 +147,11 @@ const Login = () => {
               </div>
             )}
 
-            {/* Remember Me */}
-            <div className="flex items-center justify-between mb-4">
-              <label className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="w-4 h-4 text-blue-500 rounded border-gray-300 focus:ring-blue-400"
-                />
-                <span className="text-sm text-gray-700">Remember me</span>
-              </label>
-            </div>
-
             {/* Submit */}
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-4 rounded-xl bg-gradient-to-r from-green-800 via-green-700 to-green-600 text-white font-semibold hover:shadow-lg transition-all flex items-center justify-center disabled:opacity-70"
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-green-800 via-green-700 to-green-600 text-white cursor-pointer font-semibold hover:shadow-lg transition-all flex items-center justify-center disabled:opacity-70"
             >
               {isLoading ? (
                 <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></div>
@@ -151,7 +176,13 @@ const Login = () => {
 
           {/* Social Login */}
           <div className="grid grid-cols-2 gap-3 mb-8">
-            <button className="flex items-center justify-center py-3 bg-blue-600 border border-blue-700 rounded-xl hover:bg-blue-700 text-white">
+            <button
+              onClick={() =>
+                (window.location.href =
+                  "http://localhost:5001/api/auth/facebook")
+              }
+              className="flex items-center justify-center py-3 cursor-pointer bg-blue-600 border border-blue-700 rounded-xl hover:bg-blue-700 text-white"
+            >
               <svg
                 className="w-5 h-5 mr-2"
                 fill="currentColor"
@@ -162,7 +193,12 @@ const Login = () => {
               Facebook
             </button>
 
-            <button className="flex items-center justify-center py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-300 text-gray-800">
+            <button
+              onClick={() =>
+                (window.location.href = "http://localhost:5001/api/auth/google")
+              }
+              className="flex items-center justify-center py-3 cursor-pointer bg-white border border-gray-300 rounded-xl hover:bg-gray-300 text-gray-800"
+            >
               <svg className="w-5 h-5 mr-2" viewBox="0 0 533.5 544.3">
                 <path
                   d="M533.5 278.4c0-17.9-1.6-35.2-4.6-52H272v98.9h146.9c-6.4 34.7-25.7 64.1-54.9 83.9v69.7h88.7c51.9-47.9 81.8-118.3 81.8-200.5z"

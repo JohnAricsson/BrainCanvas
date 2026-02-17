@@ -1,4 +1,4 @@
-import "./config/env.js"; // MUST BE LINE 1
+import "dotenv/config";
 import express from "express";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -6,6 +6,8 @@ import cors from "cors";
 import passport from "passport"; // Import the passport object
 import "./config/passport.js"; // Import your strategies
 import session from "express-session";
+import userRoutes from "./routes/userRoutes.js";
+import noteRoutes from "./routes/noteRoutes.js";
 //use "dev": "nodemon server.js" in package.json, express version 4.18.2
 //npm install nodemon -D
 //npm install mongoose - for mongoDB
@@ -38,5 +40,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/api/auth", authRoutes);
-
+app.use("/api/user", userRoutes);
+app.use("/api/notes", noteRoutes);
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
