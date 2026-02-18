@@ -65,7 +65,6 @@ const NoteForm = ({ type = "add", noteData, onClose, onSubmit }) => {
         className="bg-white rounded-3xl w-full max-w-2xl mx-4 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200">
           <h2 className="text-xl font-bold flex items-center gap-2">
             {type === "edit" ? "Edit Note" : "New Note"}
@@ -78,9 +77,7 @@ const NoteForm = ({ type = "add", noteData, onClose, onSubmit }) => {
           </button>
         </div>
 
-        {/* Body */}
         <div className="p-6 overflow-y-auto flex-1 flex flex-col gap-6">
-          {/* Title */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-600 uppercase tracking-wide">
               Title
@@ -95,7 +92,6 @@ const NoteForm = ({ type = "add", noteData, onClose, onSubmit }) => {
             />
           </div>
 
-          {/* Content */}
           <div>
             <label className="block mb-2 text-sm font-semibold text-gray-600 uppercase tracking-wide">
               Description
@@ -108,7 +104,6 @@ const NoteForm = ({ type = "add", noteData, onClose, onSubmit }) => {
             />
           </div>
 
-          {/* Tags */}
           <div className="bg-green-50/50 p-4 rounded-2xl">
             <label className="block mb-2 text-sm font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-1">
               <Tag size={14} /> Tags
@@ -157,7 +152,6 @@ const NoteForm = ({ type = "add", noteData, onClose, onSubmit }) => {
           )}
         </div>
 
-        {/* Footer */}
         <div className="p-6 border-t border-gray-200 flex justify-end gap-3">
           <button
             onClick={onClose}

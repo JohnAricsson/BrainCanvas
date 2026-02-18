@@ -23,7 +23,6 @@ const Navbar = ({ userInfo, onLogout }) => {
     <nav className="bg-gradient-to-r from-green-800 via-green-700 to-green-600 text-white fixed w-full z-20 shadow-md">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo Left */}
           <Link
             to="/"
             className="flex items-center gap-2 text-2xl font-extrabold"
@@ -32,14 +31,20 @@ const Navbar = ({ userInfo, onLogout }) => {
             <span>BrainCanvas</span>
           </Link>
 
-          {/* Desktop Links Right */}
           <div className="hidden md:flex items-center gap-6 text-lg font-medium">
             {userInfo ? (
               <>
-                <span className="font-semibold">{userInfo.name}</span>
-                <div className="bg-yellow-300 text-black w-10 h-10 rounded-full flex items-center justify-center font-semibold">
-                  {getInitials(userInfo.name)}
-                </div>
+                <button onClick={() => navigate("/profile")}>
+                  <span className="font-semibold cursor-pointer">
+                    {userInfo.name}
+                  </span>
+                </button>
+                <button onClick={() => navigate("/profile")}>
+                  <div className="bg-yellow-300 text-black w-10 h-10 rounded-full flex items-center justify-center font-semibold cursor-pointer">
+                    {getInitials(userInfo.name)}
+                  </div>
+                </button>
+
                 <button
                   onClick={handleLogout}
                   className="hover:bg-white hover:text-blue-500 px-3 py-1 rounded transition-colors"
@@ -65,7 +70,6 @@ const Navbar = ({ userInfo, onLogout }) => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button onClick={() => setMobileOpen(!mobileOpen)}>
               {mobileOpen ? (
@@ -78,7 +82,6 @@ const Navbar = ({ userInfo, onLogout }) => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500 text-white px-4 py-4 space-y-2">
           {userInfo ? (

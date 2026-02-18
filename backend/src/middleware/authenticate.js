@@ -1,4 +1,3 @@
-// backend/middleware/authenticate.js
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 

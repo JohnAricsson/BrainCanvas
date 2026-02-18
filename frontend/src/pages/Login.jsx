@@ -81,7 +81,6 @@ const Login = () => {
         }}
       >
         <div className="w-full max-w-md bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl px-8 py-10 border border-white/30 relative z-10 transform transition-all duration-300 hover:scale-[1.02]">
-          {/* Header */}
           <div className="flex flex-col items-center mb-12">
             <NotebookPen className="w-7 h-7 text-green-900 mb-3" />
             <h2 className="text-3xl font-bold text-green-900 mb-2">
@@ -92,9 +91,7 @@ const Login = () => {
             </p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleLogin} className="space-y-10">
-            {/* Email */}
             <div className="relative flex items-center ">
               <label className="flex items-center mb-2 text-green-900 absolute -top-6 left-0">
                 <Mail className="mr-2 text-green-900" /> Email Address
@@ -109,7 +106,6 @@ const Login = () => {
               />
             </div>
 
-            {/* Password */}
             <div className="relative flex items-center">
               <div className="flex justify-between items-center mb-2 absolute -top-6 left-0 w-full">
                 <label className="flex items-center text-green-900">
@@ -140,14 +136,12 @@ const Login = () => {
               </button>
             </div>
 
-            {/* Error */}
             {error && (
               <div className="flex items-center text-red-700 bg-red-50 border border-red-200 px-4 py-3 rounded-xl text-sm animate-shake">
                 <Shield className="mr-2" /> {error}
               </div>
             )}
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={isLoading}
@@ -167,14 +161,12 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="flex items-center my-8">
             <div className="flex-1 border-t border-gray-200"></div>
             <span className="mx-4 text-sm text-gray-500">or continue with</span>
             <div className="flex-1 border-t border-gray-200"></div>
           </div>
 
-          {/* Social Login */}
           <div className="grid grid-cols-2 gap-3 mb-8">
             <button
               onClick={() =>
@@ -221,7 +213,6 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Sign Up */}
           <div className="text-center pt-6 border-t border-gray-100">
             <p className="text-gray-600">
               New to our platform?{" "}

@@ -25,7 +25,6 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    // Frontend validation (keep this)
     if (!name || !email || !password || !confirmPassword) {
       setError("Please fill in all fields");
       return;
@@ -63,11 +62,9 @@ const Signup = () => {
         throw new Error(data.message || "Signup failed");
       }
 
-      // ✅ Success
       console.log("User created:", data);
       setIsLoading(false);
 
-      // Redirect to login
       navigate("/login");
     } catch (err) {
       setIsLoading(false);
@@ -87,7 +84,6 @@ const Signup = () => {
         }}
       >
         <div className="w-full max-w-md bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl px-8 py-10 border border-white/30 relative z-10 transform transition-all duration-300 hover:scale-[1.02]">
-          {/* Header */}
           <div className="flex flex-col items-center mb-8">
             <NotebookPen className="w-7 h-7 text-green-900 mb-3" />
             <h2 className="text-3xl font-bold text-green-900 mb-2">
@@ -99,7 +95,6 @@ const Signup = () => {
           </div>
 
           <form onSubmit={handleSignup} className="space-y-6">
-            {/* Name */}
             <div className="relative flex items-center">
               <label className="flex items-center mb-2 text-green-900 absolute -top-6 left-0">
                 <NotebookPen className="mr-2 text-green-900" /> Full Name
@@ -114,7 +109,6 @@ const Signup = () => {
               <NotebookPen className="absolute left-4 inset-y-0 my-auto text-gray-400" />
             </div>
 
-            {/* Email */}
             <div className="relative flex items-center">
               <label className="flex items-center mb-2 text-gray-700 absolute -top-6 left-0">
                 <Mail className="mr-2 text-green-900" /> Email Address
@@ -129,7 +123,6 @@ const Signup = () => {
               <Mail className="absolute left-4 inset-y-0 my-auto text-gray-400" />
             </div>
 
-            {/* Password */}
             <div className="relative flex items-center">
               <label className="flex items-center mb-2 text-green-900 absolute -top-6 left-0">
                 <Lock className="mr-2 text-green-900" /> Password
@@ -151,7 +144,6 @@ const Signup = () => {
               </button>
             </div>
 
-            {/* Confirm Password */}
             <div className="relative flex items-center">
               <label className="flex items-center mb-2 text-green-900 absolute -top-6 left-0">
                 <Lock className="mr-2 text-green-900" /> Confirm Password
@@ -179,7 +171,6 @@ const Signup = () => {
               </div>
             )}
 
-            {/* Signup Button */}
             <button
               type="submit"
               disabled={isLoading}
@@ -194,7 +185,6 @@ const Signup = () => {
               )}
             </button>
 
-            {/* Divider */}
             <div className="flex items-center my-8">
               <div className="flex-1 border-t border-gray-200"></div>
               <span className="mx-4 text-sm text-gray-500">
@@ -203,7 +193,6 @@ const Signup = () => {
               <div className="flex-1 border-t border-gray-200"></div>
             </div>
 
-            {/* Social Login */}
             <div className="grid grid-cols-2 gap-3 mb-8">
               <button
                 type="button"
@@ -253,7 +242,6 @@ const Signup = () => {
               </button>
             </div>
 
-            {/* Login Link */}
             <div className="text-center pt-6 border-t border-gray-100">
               <p className="text-gray-600">
                 Already have an account?{" "}

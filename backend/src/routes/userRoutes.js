@@ -33,5 +33,26 @@ router.get("/me", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+router.put("/update", verifyToken, async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+
+    if (password && password.trim().length >= 6) {
+      user.password = password;
+    }
+
+    await user.save();
+
+    res.json({ message: "User updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 export default router;

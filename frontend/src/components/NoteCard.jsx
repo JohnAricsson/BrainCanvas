@@ -10,13 +10,11 @@ const NoteCard = ({ note, onEdit, onDelete, onPin }) => {
         isPinned ? "border-yellow-400" : "border-green-100"
       } bg-green-100 relative`}
     >
-      {/* Pinned Indicator */}
       {isPinned && (
         <div className="absolute top-0 left-0 w-full h-1 bg-yellow-400 rounded-t-xl"></div>
       )}
 
       <div className="p-6 flex flex-col h-full">
-        {/* Title + Pin */}
         <div className="flex justify-between items-start mb-3">
           <h2 className="text-xl font-semibold text-green-900 line-clamp-1">
             {title}
@@ -31,7 +29,6 @@ const NoteCard = ({ note, onEdit, onDelete, onPin }) => {
           </button>
         </div>
 
-        {/* Date */}
         <div className="flex items-center gap-2 text-xs text-green-600 mb-3 font-medium">
           <Calendar size={14} />
           <span>
@@ -43,12 +40,10 @@ const NoteCard = ({ note, onEdit, onDelete, onPin }) => {
           </span>
         </div>
 
-        {/* Content */}
         <p className="text-green-800 text-sm leading-relaxed line-clamp-3 mb-4 min-h-[60px]">
           {content || "No content available"}
         </p>
 
-        {/* Tags */}
         <div className="flex flex-wrap gap-1 mb-4">
           {tags.map((tag, index) => (
             <span
@@ -60,7 +55,6 @@ const NoteCard = ({ note, onEdit, onDelete, onPin }) => {
           ))}
         </div>
 
-        {/* Actions */}
         <div className="flex justify-between items-center mt-auto pt-3 border-t border-green-100">
           <div className="text-green-400">
             <Tag size={16} />
