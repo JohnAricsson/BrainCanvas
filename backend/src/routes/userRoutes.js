@@ -4,9 +4,8 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-// Middleware to verify JWT
 const verifyToken = (req, res, next) => {
-  const authHeader = req.headers.authorization; // "Bearer <token>"
+  const authHeader = req.headers.authorization;
   if (!authHeader)
     return res.status(401).json({ message: "No token provided" });
 
@@ -14,12 +13,11 @@ const verifyToken = (req, res, next) => {
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err)
       return res.status(401).json({ message: "Invalid or expired token" });
-    req.userId = decoded.id; // attach user id to request
+    req.userId = decoded.id;
     next();
   });
 };
 
-// GET /user/me
 router.get("/me", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select(

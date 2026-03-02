@@ -1,10 +1,9 @@
 import express from "express";
 import Note from "../models/Note.js";
-import authenticate from "../middleware/authenticate.js"; // middleware to verify JWT
+import authenticate from "../middleware/authenticate.js";
 
 const router = express.Router();
 
-// Get all notes for logged-in user
 router.get("/me", authenticate, async (req, res) => {
   try {
     const notes = await Note.find({ user: req.user._id }).sort({
@@ -16,7 +15,6 @@ router.get("/me", authenticate, async (req, res) => {
   }
 });
 
-// Create a new note
 router.post("/", authenticate, async (req, res) => {
   try {
     const { title, content, tags } = req.body;
@@ -32,7 +30,6 @@ router.post("/", authenticate, async (req, res) => {
   }
 });
 
-// Update a note
 router.put("/:id", authenticate, async (req, res) => {
   try {
     const { title, content, tags, isPinned } = req.body;
@@ -47,7 +44,6 @@ router.put("/:id", authenticate, async (req, res) => {
   }
 });
 
-// Delete a note
 router.delete("/:id", authenticate, async (req, res) => {
   try {
     await Note.findOneAndDelete({ _id: req.params.id, user: req.user._id });
