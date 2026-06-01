@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../utils/api";
 import {
   User,
   Mail,
@@ -42,7 +43,8 @@ const Profile = () => {
     const fetchUser = async () => {
       if (!token) return navigate("/login");
       try {
-        const { data } = await axios.get("http://localhost:5001/api/user/me", {
+        // 2. Dynamic template literal with Axios GET
+        const { data } = await axios.get(`${API_BASE_URL}/api/user/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -87,7 +89,8 @@ const Profile = () => {
     setMessage({ text: "", type: "" });
 
     try {
-      await axios.put("http://localhost:5001/api/user/update", form, {
+      // 3. Dynamic template literal with Axios PUT
+      await axios.put(`${API_BASE_URL}/api/user/update`, form, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

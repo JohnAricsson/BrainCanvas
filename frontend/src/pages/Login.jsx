@@ -13,6 +13,7 @@ import Navbar from "../components/Navbar";
 import backgroundImg from "../assets/LoginBackground.jpg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import API_BASE_URL from "../utils/api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,7 +37,8 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5001/api/auth/login", {
+      // 2. Swapped to template literal with dynamic base url
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,13 +55,12 @@ const Login = () => {
         setError(data.message || "Something went wrong. Please try again.");
       }
     } catch (err) {
-      setError(
-        "Server connection failed. Is your backend running on port 5001?",
-      );
+      setError("Server connection failed. Is your backend running properly?");
     } finally {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
@@ -69,6 +70,7 @@ const Login = () => {
       navigate("/");
     }
   }, [location, navigate]);
+
   return (
     <>
       <Navbar />
@@ -168,10 +170,10 @@ const Login = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-3 mb-8">
+            {/* 3. Swapped Facebook redirect endpoint to template string */}
             <button
               onClick={() =>
-                (window.location.href =
-                  "http://localhost:5001/api/auth/facebook")
+                (window.location.href = `${API_BASE_URL}/api/auth/facebook`)
               }
               className="flex items-center justify-center py-3 cursor-pointer bg-blue-600 border border-blue-700 rounded-xl hover:bg-blue-700 text-white"
             >
@@ -185,9 +187,10 @@ const Login = () => {
               Facebook
             </button>
 
+            {/* 4. Swapped Google redirect endpoint to template string */}
             <button
               onClick={() =>
-                (window.location.href = "http://localhost:5001/api/auth/google")
+                (window.location.href = `${API_BASE_URL}/api/auth/google`)
               }
               className="flex items-center justify-center py-3 cursor-pointer bg-white border border-gray-300 rounded-xl hover:bg-gray-300 text-gray-800"
             >

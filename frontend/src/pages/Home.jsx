@@ -3,16 +3,15 @@ import Navbar from "../components/Navbar";
 import NoteCard from "../components/NoteCard";
 import NoteForm from "../components/NoteForm";
 import Toast from "../components/Toast";
+import API_BASE_URL from "../utils/api";
 import {
   Plus,
   FileQuestion,
   Activity,
   LayoutGrid,
   Calendar,
-  ShieldCheck,
   Zap,
   Search,
-  X,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -32,10 +31,11 @@ const Home = () => {
     type: "add",
   });
 
+  // 2. Updated to use the variable string template layout
   const fetchNotes = useCallback(async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5001/api/notes/me", {
+      const res = await fetch(`${API_BASE_URL}/api/notes/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.status === 401) {
@@ -60,7 +60,7 @@ const Home = () => {
       const token = localStorage.getItem("token");
       if (!token) return navigate("/login");
       try {
-        const res = await fetch("http://localhost:5001/api/user/me", {
+        const res = await fetch(`${API_BASE_URL}/api/user/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) {
@@ -78,19 +78,10 @@ const Home = () => {
     fetchUserAndNotes();
   }, [navigate, fetchNotes]);
 
-  const filteredNotes = allNotes.filter((note) => {
-    const query = searchQuery.toLowerCase();
-    const matchesTitle = note.title.toLowerCase().includes(query);
-    const matchesTags = note.tags?.some((tag) =>
-      tag.toLowerCase().includes(query),
-    );
-    return matchesTitle || matchesTags;
-  });
-
   const addNote = async (noteData) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5001/api/notes", {
+      const res = await fetch(`${API_BASE_URL}/api/notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +102,7 @@ const Home = () => {
     const noteId = openAddEditModal.data._id;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5001/api/notes/${noteId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/notes/${noteId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -131,13 +122,10 @@ const Home = () => {
   const handleDelete = async (noteData) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(
-        `http://localhost:5001/api/notes/${noteData._id}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const res = await fetch(`${API_BASE_URL}/api/notes/${noteData._id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (res.ok) {
         setAllNotes(allNotes.filter((n) => n._id !== noteData._id));
         showToastMessage("Note Deleted Successfully", "delete");
@@ -150,17 +138,14 @@ const Home = () => {
   const handlePin = async (noteData) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(
-        `http://localhost:5001/api/notes/${noteData._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ isPinned: !noteData.isPinned }),
+      const res = await fetch(`${API_BASE_URL}/api/notes/${noteData._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify({ isPinned: !noteData.isPinned }),
+      });
       if (res.ok) {
         fetchNotes();
         showToastMessage(

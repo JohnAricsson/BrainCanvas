@@ -11,6 +11,8 @@ import {
 import Navbar from "../components/Navbar";
 import backgroundImg from "../assets/LoginBackground.jpg";
 import { useNavigate, Link } from "react-router-dom";
+import API_BASE_URL from "../utils/api"; // <-- 1. Import your dynamic base URL utility
+
 const Signup = () => {
   const navigate = useNavigate();
 
@@ -44,7 +46,8 @@ const Signup = () => {
       setError(null);
       setIsLoading(true);
 
-      const response = await fetch("http://localhost:5001/api/auth/signup", {
+      // 2. Swapped hardcoded string for your dynamic base URL layout
+      const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -194,11 +197,11 @@ const Signup = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-8">
+              {/* 3. Dynamic Facebook Redirect */}
               <button
                 type="button"
                 onClick={() =>
-                  (window.location.href =
-                    "http://localhost:5001/api/auth/facebook")
+                  (window.location.href = `${API_BASE_URL}/api/auth/facebook`)
                 }
                 className="flex items-center justify-center py-3 bg-blue-600 border border-blue-700 rounded-xl hover:bg-blue-700 text-white cursor-pointer"
               >
@@ -212,11 +215,11 @@ const Signup = () => {
                 Facebook
               </button>
 
+              {/* 4. Dynamic Google Redirect */}
               <button
                 type="button"
                 onClick={() =>
-                  (window.location.href =
-                    "http://localhost:5001/api/auth/google")
+                  (window.location.href = `${API_BASE_URL}/api/auth/google`)
                 }
                 className="flex items-center justify-center py-3 bg-white border border-gray-300 rounded-xl hover:bg-gray-300 text-gray-800 cursor-pointer"
               >
