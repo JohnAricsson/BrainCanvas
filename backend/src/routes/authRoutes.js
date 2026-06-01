@@ -37,10 +37,14 @@ router.get(
   (req, res) => {
     try {
       const token = generateToken(req.user);
-      res.redirect(`http://localhost:5173/login?token=${token}`);
+      res.redirect(
+        `https://braincanvas-m4ca.onrender.com/login?token=${token}`,
+      );
     } catch (error) {
       console.error("JWT Signing Error:", error);
-      res.redirect("http://localhost:5173/login?error=auth_failed");
+      res.redirect(
+        "https://braincanvas-m4ca.onrender.com/login?error=auth_failed",
+      );
     }
   },
 );
@@ -61,10 +65,14 @@ router.get(
   (req, res) => {
     try {
       const token = generateToken(req.user);
-      res.redirect(`http://localhost:5173/login?token=${token}`);
+      res.redirect(
+        `https://braincanvas-m4ca.onrender.com/login?token=${token}`,
+      );
     } catch (error) {
       console.error("JWT Signing Error:", error);
-      res.redirect("http://localhost:5173/login?error=auth_failed");
+      res.redirect(
+        "https://braincanvas-m4ca.onrender.com/login?error=auth_failed",
+      );
     }
   },
 );
