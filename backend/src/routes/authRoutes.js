@@ -32,18 +32,17 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "/login",
+    failureRedirect:
+      "https://braincanvas007.onrender.com/login?error=cancelled",
   }),
   (req, res) => {
     try {
       const token = generateToken(req.user);
-      res.redirect(
-        `https://braincanvas-m4ca.onrender.com/login?token=${token}`,
-      );
+      res.redirect(`https://braincanvas007.onrender.com/login?token=${token}`);
     } catch (error) {
       console.error("JWT Signing Error:", error);
       res.redirect(
-        "https://braincanvas-m4ca.onrender.com/login?error=auth_failed",
+        "https://braincanvas007.onrender.com/login?error=auth_failed",
       );
     }
   },
@@ -60,18 +59,17 @@ router.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
     session: false,
-    failureRedirect: "/login",
+    failureRedirect:
+      "https://braincanvas007.onrender.com/login?error=cancelled",
   }),
   (req, res) => {
     try {
       const token = generateToken(req.user);
-      res.redirect(
-        `https://braincanvas-m4ca.onrender.com/login?token=${token}`,
-      );
+      res.redirect(`https://braincanvas007.onrender.com/login?token=${token}`);
     } catch (error) {
       console.error("JWT Signing Error:", error);
       res.redirect(
-        "https://braincanvas-m4ca.onrender.com/login?error=auth_failed",
+        "https://braincanvas007.onrender.com/login?error=auth_failed",
       );
     }
   },
@@ -93,6 +91,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
+    // Note: Make sure to hash your passwords with bcrypt in production!
     if (user.password !== password) {
       return res.status(400).json({ message: "Invalid password" });
     }
