@@ -25,6 +25,14 @@ const Home = () => {
     type: "add",
     data: null,
   });
+  const filteredNotes = allNotes.filter((note) => {
+    const query = searchQuery.toLowerCase();
+    const titleMatch = note.title?.toLowerCase().includes(query);
+    const tagMatch = note.tags?.some((tag) =>
+      tag.toLowerCase().includes(query),
+    );
+    return titleMatch || tagMatch;
+  });
   const [showToast, setShowToast] = useState({
     isShown: false,
     message: "",
