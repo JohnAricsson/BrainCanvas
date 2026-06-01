@@ -12,6 +12,9 @@ BrainCanvas helps users manage their notes efficiently with features like:
   
 The application demonstrates a complete frontend-backend integration workflow using REST APIs and state management.
 
+## Live Demo
+🔗 Live Site: https://braincanvas007.onrender.com
+
 ## How the Application Works
 
 ### Frontend (React)
