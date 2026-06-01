@@ -23,7 +23,11 @@ connectDB();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "https://braincanvas007.onrender.com",
+    ],
     credentials: true,
   }),
 );
