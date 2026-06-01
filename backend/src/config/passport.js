@@ -9,6 +9,7 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/api/auth/google/callback",
+      proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -29,6 +30,7 @@ passport.use(
     },
   ),
 );
+
 passport.use(
   new FacebookStrategy(
     {
@@ -36,6 +38,7 @@ passport.use(
       clientSecret: process.env.FACEBOOK_APP_SECRET,
       callbackURL: "/api/auth/facebook/callback",
       profileFields: ["id", "displayName", "emails", "photos"],
+      proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -63,6 +66,7 @@ passport.use(
     },
   ),
 );
+
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
