@@ -48,33 +48,6 @@ router.get(
   },
 );
 
-router.get(
-  "/facebook",
-  passport.authenticate("facebook", {
-    scope: ["public_profile", "email"],
-  }),
-);
-
-router.get(
-  "/facebook/callback",
-  passport.authenticate("facebook", {
-    session: false,
-    failureRedirect:
-      "https://braincanvas007.onrender.com/login?error=cancelled",
-  }),
-  (req, res) => {
-    try {
-      const token = generateToken(req.user);
-      res.redirect(`https://braincanvas007.onrender.com/login?token=${token}`);
-    } catch (error) {
-      console.error("JWT Signing Error:", error);
-      res.redirect(
-        "https://braincanvas007.onrender.com/login?error=auth_failed",
-      );
-    }
-  },
-);
-
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;

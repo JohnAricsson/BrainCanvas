@@ -31,42 +31,6 @@ passport.use(
   ),
 );
 
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: "/api/auth/facebook/callback",
-      profileFields: ["id", "displayName", "emails", "photos"],
-      proxy: true,
-    },
-    async (accessToken, refreshToken, profile, done) => {
-      try {
-        const email = profile.emails?.[0]?.value;
-        let user = await User.findOne({ facebookId: profile.id });
-        if (!user && email) {
-          user = await User.findOne({ email: email });
-          if (user) {
-            user.facebookId = profile.id;
-            await user.save();
-          }
-        }
-        if (!user) {
-          user = await User.create({
-            name: profile.displayName,
-            email: email,
-            facebookId: profile.id,
-          });
-        }
-
-        done(null, user);
-      } catch (err) {
-        done(err, null);
-      }
-    },
-  ),
-);
-
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
