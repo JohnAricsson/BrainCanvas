@@ -2,6 +2,7 @@ import express from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import { signup } from "../controllers/authController.js";
 const router = express.Router();
 
 const generateToken = (user) => {
@@ -19,6 +20,8 @@ const generateToken = (user) => {
     { expiresIn: "1d" },
   );
 };
+
+router.post("/signup", signup);
 
 router.get(
   "/google",
